@@ -1,0 +1,13 @@
+# Default values for project.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+namespace: production
+
+env:
+  name: ENV
+  value: production
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 80
