@@ -6,6 +6,7 @@ namespace: production
 replicaCount: 4
 
 image:
+<<<<<<< HEAD
   repository: nginx
 <<<<<<< HEAD
   tag: "30822346386"
@@ -17,6 +18,11 @@ image:
 >>>>>>> 9a5448473de74be9ea2535cfd88af2a91f2224fe
 >>>>>>> 3ae25c9b46dfd9bbdcdb7e33bc667e907e9c5de9
   pullPolicy: Always
+=======
+  repository: babugyadav/nginx
+  tag: "v1"
+
+>>>>>>> f7b4ed6 (babug)
 
 env:
   name: ENV
