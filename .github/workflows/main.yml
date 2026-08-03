@@ -62,6 +62,7 @@ jobs:
 
       - name: Verify tag update
         run: |
+          cat project/values.yaml
           grep -n "tag" project/values.yaml || true
           git diff project/values.yaml
 
