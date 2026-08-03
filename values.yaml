@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 image:
   repository: babugyadav/nginx
-  tag: latest
+  tag: "v1"
 
 replicaCount: 5
 
