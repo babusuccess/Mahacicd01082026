@@ -1,7 +1,7 @@
 # Default values for project.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-env: prod
+env: babu-stg
 images:
   repository: babugyadav/nginx
   tag: "30841600133"
