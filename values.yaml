@@ -7,7 +7,7 @@ replicaCount: 4
 
 image:
   repository: nginx
-  tag: v1
+  tag: "30814422826"
   pullPolicy: Always
 
 env:
