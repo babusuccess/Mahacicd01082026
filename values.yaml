@@ -1,18 +1,9 @@
 # Default values for project.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-image:
+env: mydev
+images:
   repository: babugyadav/nginx
   tag: "v1"
-
-replicaCount: 5
-
-env: mydev
-
-service:
-  type: NodePort
-  port: 80
-  targetPort: 80
-  nodePort: 30080
 
 

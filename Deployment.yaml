@@ -5,7 +5,7 @@ metadata:
   name: nginx-dep
   labels:
     app: dev
-    env: mydev
+    env: {{ .Values.env }}
 
 spec:
   replicas: 5
@@ -13,13 +13,13 @@ spec:
   selector:
     matchLabels:
       app: dev
-      env: mydev
+      env: {{ .Values.env }}
 
   template:
     metadata:
       labels:
         app: dev
-        env: mydev
+        env: {{ .Values.env }}
 
     spec:
       containers:
