@@ -4,7 +4,7 @@
 env: prod
 images:
   repository: babugyadav/nginx
-  tag: "30843690159"
+  tag: "30844230624"
 
 
 
