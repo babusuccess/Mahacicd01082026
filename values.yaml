@@ -8,9 +8,9 @@ replicaCount: 4
 image:
   repository: nginx
 <<<<<<< HEAD
-  tag: "v1"
+  tag: "30821161060"
 =======
-  tag: "30819914927"
+  tag: "30821161060"
 >>>>>>> 9a5448473de74be9ea2535cfd88af2a91f2224fe
   pullPolicy: Always
 
