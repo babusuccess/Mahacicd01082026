@@ -50,12 +50,12 @@ jobs:
 
     - name: Update tag in Helm chart
       run: |
-        sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/myhelm/values.yaml
+        sed -i 's/tag: .*/tag: "${{github.run_id}}"/' project/values.yaml
 
     - name: Commit and push changes
       run: |
         git config --global user.email "devpipelinepulse@gmail.com"
         git config --global user.name "devpipeline1"
-        git add helm/myhelm/values.yaml
+        git add project/values.yaml
         git commit -m "Update tag in Helm chart"
         git push
