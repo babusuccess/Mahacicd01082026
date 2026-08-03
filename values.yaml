@@ -7,6 +7,9 @@ env:
   name: ENV
   value: production
 
+image:
+  tag: v1
+
 service:
   type: NodePort
   port: 80
