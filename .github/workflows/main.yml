@@ -71,8 +71,12 @@ jobs:
 
     - name: Update tag in Helm chart
       run: |
+        echo "Before update:"
+        cat values.yaml
+
         sed -i 's/tag:.*/tag: "${{ github.run_id }}"/' values.yaml
-        echo "Updated values.yaml:"
+
+        echo "After update:"
         cat values.yaml
 
     - name: Commit and push changes
@@ -83,8 +87,6 @@ jobs:
         git add values.yaml
 
         git commit -m "Update tag in Helm chart" || echo "No changes to commit"
-
-        git pull --no-rebase origin main
 
         git push origin main
 
