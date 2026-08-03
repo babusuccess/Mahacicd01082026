@@ -54,8 +54,8 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git config --global user.email "devpipelinepulse@gmail.com"
-        git config --global user.name "devpipeline1"
+        git config --global user.email "babusuccess@gmail.com"
+        git config --global user.name "babusuccess"
         git add project/values.yaml
         git commit -m "Update tag in Helm chart"
         git push
