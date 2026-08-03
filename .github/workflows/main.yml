@@ -56,8 +56,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        token: ${{ github.TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
+        persist-credentials: true
+
+    - name: Get latest code
+      run: |
+        git fetch origin main
+        git checkout main
+        git reset --hard origin/main
 
     - name: Check values.yaml
       run: |
@@ -80,11 +87,14 @@ jobs:
         git config --global user.email "babusuccess@gmail.com"
         git config --global user.name "babusuccess"
 
+        echo "Git status:"
         git status
-        git diff
 
         git add values.yaml
 
-        git commit -m "Update tag in Helm chart" || echo "No changes to commit"
+        echo "Staged changes:"
+        git diff --cached
 
-        git push origin HEAD:main
+        git commit -m "Update tag in Helm chart"
+
+        git push origin main
