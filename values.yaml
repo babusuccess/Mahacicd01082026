@@ -3,14 +3,19 @@
 # Declare variables to be passed into your templates.
 namespace: production
 
+replicaCount: 4
+
+image:
+  repository: nginx
+  tag: v1
+  pullPolicy: Always
+
 env:
   name: ENV
   value: production
 
-image:
-  tag: v1
-
 service:
+  name: nginx-service
   type: NodePort
   port: 80
   targetPort: 80
