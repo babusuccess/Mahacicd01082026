@@ -54,9 +54,9 @@ jobs:
         run: |
           sed -i 's/^[[:space:]]*tag:.*/  tag: "${{ github.run_id }}"/' project/values.yaml
 
-      - name: Check updated values.yaml
+      - name: Verify Helm tag update
         run: |
-          cat project/values.yaml
+          grep -n "tag:" project/values.yaml
           git diff project/values.yaml
 
       - name: Commit and push changes
