@@ -1,30 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
-  name: nginx
-  namespace: {{ .Values.namespace }}
+  name: nginx-dep
+  labels:
+    app: dev
+    env: mydev
+
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 5
+
   selector:
     matchLabels:
-      app: nginx
+      app: dev
+      env: mydev
+
   template:
     metadata:
       labels:
-        app: nginx
+        app: dev
+        env: mydev
+
     spec:
       containers:
         - name: nginx
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: babugyadav/nginx:{{ .Values.image.tag }}
           ports:
             - containerPort: 80
-          env:
-            - name: {{ .Values.env.name }}
-              value: "{{ .Values.env.value }}"
-          volumeMounts:
-            - name: nginx-html
-              mountPath: /usr/share/nginx/html
-      volumes:
-        - name: nginx-html
-          configMap:
-            name: nginx-html
