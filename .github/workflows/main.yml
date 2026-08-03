@@ -50,6 +50,12 @@ jobs:
         with:
           token: ${{ github.token }}
 
+      - name: Check repository files
+        run: |
+          pwd
+          ls -la
+          find . -name values.yaml
+
       - name: Update tag in Helm chart
         run: |
           sed -i 's/^[[:space:]]*tag:.*/  tag: "${{ github.run_id }}"/' project/values.yaml
