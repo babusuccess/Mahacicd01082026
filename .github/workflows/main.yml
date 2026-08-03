@@ -59,15 +59,11 @@ jobs:
         token: ${{ github.TOKEN }}
         fetch-depth: 0
 
-    - name: Pull latest changes
-      run: |
-        git pull origin main
-
-    - name: Check values.yaml location
+    - name: Check values.yaml
       run: |
         pwd
         ls -la
-        find . -name values.yaml
+        cat values.yaml
 
     - name: Update tag in Helm chart
       run: |
@@ -84,27 +80,11 @@ jobs:
         git config --global user.email "babusuccess@gmail.com"
         git config --global user.name "babusuccess"
 
+        git status
+        git diff
+
         git add values.yaml
 
         git commit -m "Update tag in Helm chart" || echo "No changes to commit"
 
-        git push origin main
-
-
-  final-git-pull:
-
-    runs-on: ubuntu-latest
-
-    needs: update-newtag-in-helm-chart
-
-    steps:
-
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Final git pull after completion
-      run: |
-        git pull origin main
-        echo "Final git pull completed successfully"
+        git push origin HEAD:main
