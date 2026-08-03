@@ -4,6 +4,6 @@
 env: mydev
 images:
   repository: babugyadav/nginx
-  tag: "30837164183"
+  tag: "30837889696"
 
 
