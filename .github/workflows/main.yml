@@ -2,6 +2,9 @@
 # Sets the name of the workflow. It will show up in GitHub Actions UI as CI.
 name: CI
 
+permissions:
+  contents: write
+
 # Exclude the workflow to run on changes to the helm chart
 on:
   push:
@@ -65,5 +68,5 @@ jobs:
         git config --global user.name "babusuccess"
 
         git add values.yaml
-        git commit -m "Update tag in Helm chart"
+        git commit -m "Update tag in Helm chart" || echo "No changes to commit"
         git push
