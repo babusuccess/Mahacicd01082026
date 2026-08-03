@@ -2,9 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 env: prod
+app: dev
 images:
   repository: babugyadav/nginx
-  tag: "30845653178"
+  tag: "30844230624"
 
 
 

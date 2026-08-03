@@ -4,15 +4,15 @@ kind: Service
 metadata:
   name: nginx-service
   labels:
-    app: dev
-    env: mydev
+    app: {{ .Values.app }}
+    env: {{ .Values.env }}
 
 spec:
   type: {{ .Values.service.type }}
 
   selector:
-    app: dev
-    env: mydev
+    app: {{ .Values.app }}
+    env: {{ .Values.env }}
 
   ports:
     - port: {{ .Values.service.port }}
