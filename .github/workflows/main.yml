@@ -1,5 +1,5 @@
 # CICD using GitHub actions
-#Sets the name of the workflow. It will show up in GitHub Actions UI as CI.
+# Sets the name of the workflow. It will show up in GitHub Actions UI as CI.
 name: CI
 
 # Exclude the workflow to run on changes to the helm chart
@@ -35,7 +35,8 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{github.run_id}}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{ github.run_id }}
+
 
   update-newtag-in-helm-chart:
     runs-on: ubuntu-latest
@@ -48,14 +49,21 @@ jobs:
       with:
         token: ${{ github.TOKEN }}
 
+    - name: Check values.yaml location
+      run: |
+        pwd
+        ls -la
+        find . -name values.yaml
+
     - name: Update tag in Helm chart
       run: |
-        sed -i 's/tag: .*/tag: "${{github.run_id}}"/' project/values.yaml
+        sed -i 's/tag: .*/tag: "${{ github.run_id }}"/' values.yaml
 
     - name: Commit and push changes
       run: |
         git config --global user.email "babusuccess@gmail.com"
         git config --global user.name "babusuccess"
-        git add project/values.yaml
+
+        git add values.yaml
         git commit -m "Update tag in Helm chart"
         git push
