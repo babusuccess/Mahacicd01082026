@@ -4,7 +4,7 @@
 env: babu-stg
 images:
   repository: babugyadav/nginx
-  tag: "30841600133"
+  tag: "30842388905"
 
 
 
