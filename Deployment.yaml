@@ -21,9 +21,9 @@ spec:
         app: dev
         env: {{ .Values.env }}
 
-    spec:
-      containers:
-        - name: nginx
-          image: "{{ .Values.images.repository }}:{{ .Values.images.tag }}"
-          ports:
-            - containerPort: 80
+  spec:
+    containers:
+    - name: nginx
+      image: "{{ .Values.images.repository }}:{{ .Values.images.tag }}"
+      ports:
+        - containerPort: 80
