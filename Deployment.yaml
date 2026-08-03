@@ -24,6 +24,6 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: babugyadav/nginx:{{ .Values.image.tag }}
+          image: {{ .Values.images.repository }}
           ports:
             - containerPort: 80
