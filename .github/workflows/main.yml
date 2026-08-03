@@ -58,19 +58,20 @@ jobs:
 
       - name: Update tag in Helm chart
         run: |
-          sed -i 's/^[[:space:]]*tag:.*/  tag: "${{ github.run_id }}"/' project/values.yaml
+          sed -i 's/^[[:space:]]*tag:.*/  tag: "${{ github.run_id }}"/' values.yaml
 
       - name: Verify tag update
         run: |
-          grep -n "tag" project/values.yaml || true
-          git diff project/values.yaml
+          cat values.yaml
+          grep -n "tag" values.yaml || true
+          git diff values.yaml
 
       - name: Commit and push changes
         run: |
           git config --global user.email "babusuccess@gmail.com"
           git config --global user.name "babusuccess"
 
-          git add project/values.yaml
+          git add values.yaml
 
           git commit -m "Update tag in Helm chart" || echo "No changes to commit"
 
