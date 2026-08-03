@@ -53,9 +53,10 @@ jobs:
         sed -i 's/tag: .*/tag: "${{github.run_id}}"/' project/values.yaml
 
     - name: Commit and push changes
-      run: |
-        git config --global user.email "babusuccess@gmail.com"
-        git config --global user.name "babusuccess"
-        git add project/values.yaml
-        git commit -m "Update tag in Helm chart"
-        git push
+      - name: Commit and push changes
+  run: |
+    git config --global user.email "babusuccess@gmail.com"
+    git config --global user.name "babusuccess"
+    git add project/values.yaml
+    git commit -m "Update tag in Helm chart" || echo "No changes to commit"
+    git push
