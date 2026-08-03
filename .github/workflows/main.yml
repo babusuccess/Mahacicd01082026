@@ -1,78 +1,39 @@
-# CICD using GitHub actions
+update-newtag-in-helm-chart:
+  runs-on: ubuntu-latest
+  needs: build
 
-name: CI
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ github.token }}
 
-on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'helm/**'
-      - 'README.md'
+    - name: Check repository files
+      run: |
+        pwd
+        ls -la
+        find . -type f -name "values.yaml"
 
-permissions:
-  contents: write
+    - name: Update tag in Helm chart
+      run: |
+        sed -i 's/^[[:space:]]*tag:.*/  tag: "${{ github.run_id }}"/' project/values.yaml
 
-jobs:
+    - name: Verify tag update
+      run: |
+        cat project/values.yaml
+        grep -n "tag" project/values.yaml
+        git diff project/values.yaml
 
-  build:
-    runs-on: ubuntu-latest
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "babusuccess@gmail.com"
+        git config --global user.name "babusuccess"
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+        git add project/values.yaml
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        git commit -m "Update tag in Helm chart" || echo "No changes to commit"
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        git pull --rebase origin main
 
-      - name: Build and Push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{ github.run_id }}
-
-  update-newtag-in-helm-chart:
-    runs-on: ubuntu-latest
-
-    needs: build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ github.token }}
-
-      - name: Check repository files
-        run: |
-          pwd
-          ls -la
-          find . -type f -name "values.yaml"
-
-      - name: Update tag in Helm chart
-        run: |
-          sed -i 's/^[[:space:]]*tag:.*/  tag: "${{ github.run_id }}"/' values.yaml
-
-      - name: Verify tag update
-        run: |
-          cat values.yaml
-          grep -n "tag" values.yaml || true
-          git diff values.yaml
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.email "babusuccess@gmail.com"
-          git config --global user.name "babusuccess"
-
-          git add values.yaml
-
-          git commit -m "Update tag in Helm chart" || echo "No changes to commit"
-
-          git push
+        git push origin main
