@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx
+    env: {{ .Values.env }}
+spec:
+  selector:
+    app: nginx
+    env: {{ .Values.env }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{ .Values.containerPort }}
+  type: ClusterIP
