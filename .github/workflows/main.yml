@@ -25,7 +25,16 @@ jobs:
           ls -la
           echo ""
           echo "Searching for Dockerfile..."
-          find . -name "Dockerfile"
+          find . -iname "Dockerfile"
+
+      - name: Verify Dockerfile exists
+        run: |
+          if [ ! -f "./project/project/Dockerfile" ]; then
+            echo "ERROR: Dockerfile not found at ./project/project/Dockerfile"
+            echo "Available Dockerfiles:"
+            find . -iname "Dockerfile"
+            exit 1
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -39,8 +48,8 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./project/project
+          file: ./project/project/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{ github.run_id }}
 
@@ -57,17 +66,17 @@ jobs:
       - name: Update image tag in Helm chart
         run: |
           echo "Updating Helm image tag..."
-          sed -i 's/tag:.*/tag: "${{ github.run_id }}"/' project/values.yaml
+          sed -i 's/tag:.*/tag: "${{ github.run_id }}"/' project/project/values.yaml
 
           echo "Updated values.yaml:"
-          cat project/values.yaml
+          cat project/project/values.yaml
 
       - name: Commit and push changes
         run: |
           git config --global user.email "babusuccess@gmail.com"
           git config --global user.name "babusuccess"
 
-          git add project/values.yaml
+          git add project/project/values.yaml
 
           git diff --cached --quiet || git commit -m "Update Helm chart image tag to ${{ github.run_id }}"
 
