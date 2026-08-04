@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'project/**'
-      - 'README.md'
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -52,11 +52,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ github.TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update image tag in Helm chart
         run: |
+          echo "Updating Helm image tag..."
           sed -i 's/tag:.*/tag: "${{ github.run_id }}"/' project/values.yaml
+
+          echo "Updated values.yaml:"
+          cat project/values.yaml
 
       - name: Commit and push changes
         run: |
