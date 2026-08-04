@@ -111,14 +111,14 @@ jobs:
 
     - name: Update image tag in Helm chart
       run: |
-        sed -i 's/tag:.*/tag: "${{ github.run_id }}"/' values.yaml
+        sed -i 's/tag:.*/tag: "${{ github.run_id }}"/' project/values.yaml
 
         echo "Updated values.yaml:"
         cat values.yaml
 
     - name: Commit and push changes
       run: |
-        git add values.yaml
+        git add project/values.yaml
 
         if git diff --cached --quiet; then
           echo "No changes detected"
