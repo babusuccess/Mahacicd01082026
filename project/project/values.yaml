@@ -3,7 +3,7 @@ env: prod
 images:
   repository: babugyadav/nginx
 <<<<<<< HEAD
-  tag: "30926185007"
+  tag: "30926488716"
 =======
-  tag: "30926185007"
+  tag: "30926488716"
 >>>>>>> 6e1ead883a302d5db187f1b867a88a5c0428775a
