@@ -2,4 +2,8 @@
 env: dev
 images:
   repository: babugyadav/nginx
+<<<<<<< HEAD
   tag: "lateast"
+=======
+  tag: "30925635992"
+>>>>>>> 6e1ead883a302d5db187f1b867a88a5c0428775a
