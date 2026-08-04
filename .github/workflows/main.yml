@@ -11,6 +11,7 @@ on:
       - 'helm/**'
       - 'README.md'
 
+
 jobs:
 
   build:
@@ -47,21 +48,24 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{ github.run_id }}
 
 
-    # Install Trivy
+    # Install Trivy Security Scanner
     - name: Install Trivy
       run: |
         sudo apt-get update
         sudo apt-get install -y wget apt-transport-https gnupg lsb-release
 
-        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | \
+        sudo gpg --dearmor -o /usr/share/keyrings/trivy.gpg
 
-        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] \
+        https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | \
+        sudo tee /etc/apt/sources.list.d/trivy.list
 
         sudo apt-get update
         sudo apt-get install -y trivy
 
 
-    # Docker Image Security Scan
+    # Image Vulnerability Scan
     - name: Scan Docker Image with Trivy
       continue-on-error: true
       run: |
@@ -78,15 +82,26 @@ jobs:
 
     needs: build
 
+    permissions:
+      contents: write
+
     steps:
 
 
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        token: $${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
         persist-credentials: true
+
+
+    - name: Configure Git Authentication
+      run: |
+        git config --global user.email "babusuccess@gmail.com"
+        git config --global user.name "babusuccess"
+
+        git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
 
     - name: Get latest code
@@ -96,7 +111,7 @@ jobs:
         git reset --hard origin/main
 
 
-    - name: Check values.yaml
+    - name: Check current values.yaml
       run: |
         echo "Current values.yaml:"
         cat values.yaml
@@ -115,25 +130,25 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git config --global user.email "babusuccess@gmail.com"
-        git config --global user.name "babusuccess"
-
         git add values.yaml
 
-        echo "Git diff:"
+        echo "Changes:"
         git diff --cached
 
-        git diff --cached --quiet && echo "No changes to commit" && exit 0
+        if git diff --cached --quiet; then
+          echo "No changes detected"
+          exit 0
+        fi
 
         git commit -m "Update tag in Helm chart"
 
         git push origin main
 
 
-    - name: Pull latest changes and verify tag
+    - name: Pull latest changes and verify updated tag
       run: |
-        echo "Pulling latest changes..."
+        echo "Pulling latest main branch..."
         git pull origin main
 
-        echo "Updated values.yaml:"
+        echo "Final values.yaml:"
         cat values.yaml
