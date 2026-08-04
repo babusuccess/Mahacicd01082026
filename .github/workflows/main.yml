@@ -44,6 +44,17 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{ github.run_id }}
 
+    # Image Security Scan
+    - name: Install Trivy
+      uses: aquasecurity/setup-trivy@v0.2.3
+
+    - name: Scan Docker Image with Trivy
+      run: |
+        trivy image \
+          --severity HIGH,CRITICAL \
+          --exit-code 1 \
+          ${{ secrets.DOCKERHUB_USERNAME }}/nginx:${{ github.run_id }}
+
 
   update-newtag-in-helm-chart:
 
@@ -98,3 +109,11 @@ jobs:
         git commit -m "Update tag in Helm chart"
 
         git push origin main
+
+    - name: Pull latest changes and verify updated tag
+      run: |
+        echo "Pulling latest changes..."
+        git pull origin main
+
+        echo "Latest values.yaml after tag update:"
+        cat values.yaml
