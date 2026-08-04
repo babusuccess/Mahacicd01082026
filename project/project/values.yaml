@@ -6,4 +6,4 @@ env: dev
 
 image:
   repository: babugyadav/nginx
-  tag: "30912133988"
+  tag: "30912454861"
