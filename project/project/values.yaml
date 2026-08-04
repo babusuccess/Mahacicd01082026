@@ -1,7 +1,5 @@
 # Default values for project.
 env: dev
-app: nginx
-
 images:
   repository: babugyadav/nginx
-  tag: "v1"
+  tag: "lateast"
