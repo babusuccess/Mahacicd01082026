@@ -65,10 +65,12 @@ jobs:
 
       - name: Update image tag in Helm chart
         run: |
-          echo "Updating Helm image tag..."
+          echo "Before update:"
+          cat project/project/values.yaml
+
           sed -i 's/tag:.*/tag: "${{ github.run_id }}"/' project/project/values.yaml
 
-          echo "Updated values.yaml:"
+          echo "After update:"
           cat project/project/values.yaml
 
       - name: Commit and push changes
