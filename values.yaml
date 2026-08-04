@@ -1,0 +1,25 @@
+# Default values for project.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+namespace: production
+
+replicaCount: 4
+
+image:
+  repository: nginx
+<<<<<<< HEAD
+  tag: "v1"
+=======
+  tag: "30819914927"
+>>>>>>> 9a5448473de74be9ea2535cfd88af2a91f2224fe
+  pullPolicy: Always
+
+env:
+  name: ENV
+  value: production
+
+service:
+  name: nginx-service
+  type: NodePort
+  port: 80
+  targetPort: 80
