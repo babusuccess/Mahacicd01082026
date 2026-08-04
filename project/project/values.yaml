@@ -1,5 +1,5 @@
 # Default values for project.
-env: dev
+env: prod
 images:
   repository: babugyadav/nginx
 <<<<<<< HEAD
