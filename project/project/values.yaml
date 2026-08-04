@@ -4,4 +4,4 @@ app: nginx
 
 images:
   repository: babugyadav/nginx
-  tag: "v1"
+  tag: "30925635992"
