@@ -3,10 +3,7 @@
 # Declare variables to be passed into your templa
 app: nginx
 env: dev
-replicaCount: 2
 
 image:
   repository: nginx
-  tag: "1.25"
-
-containerPort: 80
+  tag: "latest"
