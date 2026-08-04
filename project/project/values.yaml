@@ -1,10 +1,12 @@
 # Default values for project.
 # This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-env: prod
+# Declare variables to be passed into your templa
+app: nginx
+env: dev
+replicaCount: 2
 
 image:
-  repository: babugyadav/nginx
-  tag: "v1"
-  app: nginx
+  repository: nginx
+  tag: "1.25"
+
+containerPort: 80
