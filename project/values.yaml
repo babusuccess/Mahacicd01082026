@@ -1,9 +1,0 @@
-# Default values for project.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-env: dev
-
-image:
-  repository: babugyadav/nginx
-  tag: "30914514430"
