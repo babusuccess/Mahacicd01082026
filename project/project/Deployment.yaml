@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nginx-deployment
   labels:
-    app: nginx
+    app: {{ .Values.app}}
     env: {{ .Values.env }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx
+        app: {{ .Values.app }}
         env: {{ .Values.env }}
     spec:
       containers:

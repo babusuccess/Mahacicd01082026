@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: nginx-service
   labels:
-    app: nginx
+    app: {{ .Values.app }}
     env: {{ .Values.env }}
 spec:
   selector:
-    app: nginx
+    app: {{ .Values.app }}
     env: {{ .Values.env }}
   ports:
     - protocol: TCP
