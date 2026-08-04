@@ -5,7 +5,7 @@ env: prod
 app: dev
 images:
   repository: babugyadav/nginx
-  tag: "30846193463"
+  tag: "30885447988"
 
 
 
